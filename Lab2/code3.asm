@@ -50,3 +50,48 @@ main:
 
 	mov	rax,0		        ; return 0
 	ret				
+
+
+extern  printf
+extern  scanf
+
+SECTION .data
+a:          dq 0
+in_fmt:     db "%ld", 0
+out_fmt:    db "%ld", 10, 0          ; "%ld\n"
+
+
+
+
+; without prompt message
+
+SECTION .text
+global main
+main:
+    push    rbp
+
+    ; read input number into [a]
+    xor     rax, rax                 ; rax=0 for variadic call
+    mov     rdi, in_fmt
+    mov     rsi, a
+    call    scanf
+
+    ; rax = n(n+1)/2
+    mov     rax, [a]                 ; rax = n
+    mov     r8,  rax                 ; r8  = n
+    inc     r8                       ; r8  = n + 1
+    imul    rax, r8                  ; rax = n*(n+1)
+    cqo                              ; sign-extend rax into rdx:rax
+    mov     rcx, 2
+    idiv    rcx                      ; rax = rax / 2
+
+    ; print result as just the number + newline
+    xor     rdx, rdx                 ; not needed, just keeping regs clean
+    xor     rax, rax                 ; rax=0 for variadic call
+    mov     rdi, out_fmt
+    mov     rsi, rax                 ; sum
+    call    printf
+
+    pop     rbp
+    xor     rax, rax                 ; return 0
+    ret
