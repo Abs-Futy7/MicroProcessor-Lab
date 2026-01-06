@@ -1,0 +1,15 @@
+# Object files
+*.o
+
+# Compiled executables (no extension)
+Lab*/[0-9]*_[0-9]*
+Lab*/[0-9]*_Task[0-9]*
+Lab*/gcd_me
+Lab*/max
+Lab*/prime
+Lab*/problem
+Lab*/dummy
+EEval/Prob[0-9]*
+EEval/Prob[0-9][0-9]*
+Extra/*
+!Extra/*.asm
